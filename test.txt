@@ -1,0 +1,24 @@
+server started at port 80
+request market
+got search response
+got search data
+got item response
+got actual data
+got item response
+got actual data
+got item response
+got actual data
+got item response
+got actual data
+got item response
+got actual data
+got item response
+got actual data
+got item response
+got actual data
+got item response
+got actual data
+got item response
+got actual data
+got item response
+got actual data
