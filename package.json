@@ -1,0 +1,11 @@
+{
+  "name": "steam-market-scrape",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "cheerio": "^0.18.0",
+    "express": "^4.10.6",
+    "request": "^2.51.0"
+  }
+}
