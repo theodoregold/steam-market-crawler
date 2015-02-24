@@ -10,7 +10,8 @@ var items = [],
 
 // should probably add some config here
 var config = {
-    "days" : 3
+    "days" : 3,
+    "markup" : 0.01,
     // results per page
     // how many pages
     // price history (days, months or alltime)
@@ -18,12 +19,56 @@ var config = {
 };
 
 
+function setMarkup(curPrice) {
+    var markupPrice = 0,
+        markupSteam = 0,
+        markupGame = 0;
+
+    // just add markup
+    markupPrice = parseFloat((curPrice + config.markup).toFixed(4));
+
+    // calculate steam markup
+    markupSteam = Math.ceil(parseFloat((markupPrice * 0.05) * 100)) / 100;
+
+    // calculate game markup
+    markupGame = Math.ceil(parseFloat((markupPrice * 0.1) * 100)) / 100;
+
+    return parseFloat((markupPrice + markupSteam + markupGame).toFixed(4));
+}
+
 
 /**
  * Finds out if buying item could be profitable or not
  */
-function getProfit() {
+function parsePrice() {
+    var highPrice = 0,
+        lowPrice = null;
+        totalSold = 0;
 
+    var tmp;
+    for (item in items) {
+        highPrice = 0,
+        lowPrice = null;
+        totalSold = 0;
+
+        for (moment in items[item].history) {
+            tmp = items[item].history[moment];
+
+            if(tmp.price > highPrice) highPrice = tmp.price;
+            if(tmp.price < lowPrice || !lowPrice) lowPrice = tmp.price;
+
+            totalSold += tmp.quantity;
+        }
+
+        items[item].profit = {
+            "lowPrice" : lowPrice,  
+            "highPrice" : highPrice,
+            "margin" : parseFloat((highPrice - lowPrice).toFixed(4)),  
+            "markupPrice" : setMarkup(lowPrice),            
+            "markupMargin" : parseFloat((highPrice - setMarkup(lowPrice)).toFixed(4)),  
+            "totalSold" : totalSold
+        }
+    }
 }
 
 
@@ -58,8 +103,8 @@ function parseHistory(body) {
         if(itemDate.isAfter(curDate)) { // returns only a fraction of history (set in config)
             historyParsed.push({
                 "date" : itemDate,
-                "price" : tmp[1],
-                "quantity" : tmp[2]
+                "price" : parseFloat(tmp[1]),
+                "quantity" : parseInt(tmp[2])
             });    
         }
     }
@@ -86,6 +131,7 @@ function parseItem(body) {
 
     items.push({
         "name" : item.find(".market_listing_item_name").text(),
+        "link" : $(".market_listing_nav a:nth-child(2)").attr("href"),
         "img" : item.find(".market_listing_item_img").attr("src"),
         "history" : parseHistory(body)
     });
@@ -113,10 +159,11 @@ function getItems(answ) {
                         console.log("got item response");
                     }
 
-                    parseItem(body);
+                    parseItem(body);                    
 
                     totalReq--;
                     if(totalReq == 0) {
+                        parsePrice();
                         answ.json(items);
                     }                
                 }
