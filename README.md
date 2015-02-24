@@ -13,7 +13,7 @@ Example response.
 	"name": "Sawed-Off | Forest DDPAT (Field-Tested)",
 	"link": "http://steamcommunity.com/market/listings/730/Sawed-Off%20%7C%20Forest%20DDPAT%20%28Field-Tested%29",
 	"img": "http://steamcommunity-a.akamaihd.net/economy/image/fWFc82js0fmoRAP-qOIPu5THSWqfSmTELLqcUywGkijVjZYMUrsm1j-9xgEObwgfEh_nvjlWhNzZCveCDfIBj98xqodQ2CZknz5oNfSwNDhhdDvKGJ9aWOU74DfhDCM7_cotAtXk8-5fcAjs5YOQYuIsYd8fScHRCfWDY1j7u0g9h6lfKseMpHjpjDOpZDlmf0CGVQ/62fx62f",
-	"history": [{
+	"history": [{ // price history of X last days
 		date": "2015-02-21T14:00:00.000Z",
 		"price": 0.03,
 		"quantity": 256
