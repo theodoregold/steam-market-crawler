@@ -1,5 +1,6 @@
 var express = require('express'),
     request = require('request'),
+    moment = require('moment'),
     app = express(),
     cheerio = require('cheerio');
 
@@ -9,10 +10,21 @@ var items = [],
 
 // should probably add some config here
 var config = {
+    "days" : 3
     // results per page
+    // how many pages
     // price history (days, months or alltime)
     // item category
 };
+
+
+
+/**
+ * Finds out if buying item could be profitable or not
+ */
+function getProfit() {
+
+}
 
 
 /**
@@ -34,14 +46,22 @@ function parseHistory(body) {
     var history = body.slice(historyStart + 9, historyEnd); // returns string without start and end
     history = history.split('"],["');
 
-    var tmp;
+    var tmp, 
+        itemDate,
+        curDate = moment().subtract(config.days, 'days');
+
     for (item in history) {
         tmp = history[item].split(/\"*,\"*/);
-        historyParsed.push({
-            "date" : tmp[0],
-            "price" : tmp[1],
-            "quantity" : tmp[2]
-        });
+        
+        itemDate = moment(tmp[0]);
+
+        if(itemDate.isAfter(curDate)) { // returns only a fraction of history (set in config)
+            historyParsed.push({
+                "date" : itemDate,
+                "price" : tmp[1],
+                "quantity" : tmp[2]
+            });    
+        }
     }
 
     return historyParsed;
