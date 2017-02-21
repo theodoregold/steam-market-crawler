@@ -1,10 +1,15 @@
 ### What is this?
-Not really a trader or gamer myself, but I wonder of Steam Market. Can I scan (scrape) and analyze it for profitable trades? Well, the idea is to scan market and find items that have large price fluctuations, so large you can make some money.
+Scan Steam marketplace and find items that have large price fluctuations.
+Find items that are undervalued.
+Profit?
 
+Example:
 Lets say there is a `Glock-18` that for the last 5 days has had a highest price of 2 EUR and lowest price of 1 EUR. Now steam markup is 15% of item price. That means there is 0,85 cents to be made. 
 
+
 ### Getting started
-It's really straight forward. Just run it `npm install` to get dependencies and `node index.js` to start the app on `localhost:80`.
+It is really straight forward. Just run `npm install` to get dependencies and `node index.js` to start the app on `localhost:80`.
+
 
 ### Response
 Example response.
@@ -29,8 +34,10 @@ Example response.
 },{..}]
 ```
 
+
 ### TO-DO
  * Implement a config file.
+
 
 ### Issues
 Found a bug or better solution? Please report to the issue section.
